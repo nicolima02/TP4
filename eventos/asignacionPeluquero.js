@@ -9,36 +9,36 @@ export const asignacionPeluquero = (datosForm, peluqueros, cliente, reloj, event
     if (rnd < datosForm.aprendiz[0]) {
         peluquero = "Aprendiz";
         peluquero = new AsignacionPeluquero(rnd,peluquero);
-        if (peluqueros.aprendiz.estado === "L") {
+        if (peluqueros.aprendiz.estado === "L" && reloj < 13) {
             peluqueros.aprendiz.estado = "O";
             cliente.peluquero = "Aprendiz";
             cliente.estado = "SA";
             finAtencion(reloj,eventos,peluquero,datosForm,dia);
-        }else{
+        }else if(reloj<13){
             cliente.peluquero = "Aprendiz";
             peluqueros.aprendiz.cola.push(cliente);
         }
     }else if (rnd >= datosForm.aprendiz[0] && rnd < (datosForm.veteranoA[0]+datosForm.aprendiz[0])){
         peluquero = "Veterano A";
         peluquero = new AsignacionPeluquero(rnd,peluquero);
-        if (peluqueros.veteranoA.estado === "L") {
+        if (peluqueros.veteranoA.estado === "L" && reloj< 13) {
             peluqueros.veteranoA.estado = "O";
             cliente.peluquero = "Veterano A";
             cliente.estado = "SA";
             finAtencion(reloj,eventos,peluquero,datosForm,dia);
-        }else{
+        }else if(reloj<13){
             cliente.peluquero = "Veterano A";
             peluqueros.veteranoA.cola.push(cliente);
         }
     }else{
         peluquero = "Veterano B";
         peluquero = new AsignacionPeluquero(rnd,peluquero);
-        if (peluqueros.veteranoB.estado === "L") {
+        if (peluqueros.veteranoB.estado === "L" && reloj < 13) {
             peluqueros.veteranoB.estado = "O";
             cliente.peluquero = "Veterano B";
             cliente.estado = "SA";
             finAtencion(reloj,eventos,peluquero,datosForm,dia);
-        }else{
+        }else if(reloj<13){
             cliente.peluquero = "Veterano B";
             peluqueros.veteranoB.cola.push(cliente);
         }

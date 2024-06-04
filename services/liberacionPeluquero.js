@@ -19,7 +19,7 @@ export const liberacionPeluquero = (reloj, peluquerosList,filas,clientes,eventos
                         clientes.splice(i, 1);
                     }
                 }
-                finAtencion(fila.control.evento.finAtencion,eventos,peluquerosList.aprendiz,datosForm,dia);
+                finAtencion(fila.control.evento.finAtencion,eventos,{peluquero: "Aprendiz"},datosForm,dia);
                 fila.finAtencionPeluquero = eventos[eventos.length-1];
                 peluquerosList.aprendiz.cola[0].estado = "SA";
                 peluquerosList.aprendiz.cola.splice(0, 1);
@@ -42,7 +42,7 @@ export const liberacionPeluquero = (reloj, peluquerosList,filas,clientes,eventos
                         clientes.splice(i, 1);
                     }
                 }   
-                finAtencion(fila.control.evento.finAtencion,eventos,peluquerosList.veteranoA,datosForm,dia);
+                finAtencion(fila.control.evento.finAtencion, eventos, {peluquero: "Veterano A"}, datosForm, dia);
                 fila.finAtencionPeluquero = eventos[eventos.length-1];
                 fila.finAtencionPeluquero = peluquerosList.veteranoA.cola[0].finAtencion;
                 peluquerosList.veteranoA.cola[0].estado = "SA";
@@ -66,7 +66,7 @@ export const liberacionPeluquero = (reloj, peluquerosList,filas,clientes,eventos
                         clientes.splice(i, 1);
                     }
                 }
-                finAtencion(fila.control.evento.finAtencion,eventos,peluquerosList.veteranoB,datosForm,dia);
+                finAtencion(fila.control.evento.finAtencion,eventos,{peluquero: "Veterano B"},datosForm,dia);
                 fila.finAtencionPeluquero = eventos[eventos.length-1];
                 peluquerosList.veteranoB.cola[0].estado = "SA";
                 peluquerosList.veteranoB.cola.splice(0, 1);
