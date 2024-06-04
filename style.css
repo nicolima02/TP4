@@ -1,0 +1,182 @@
+body{
+    background-color: #333;
+    text-align: center;
+    font-size: 16px;
+    font-family: sans-serif;
+    color: white;
+    margin: auto;
+    padding-bottom: 50px;
+}
+
+h1{
+    font-weight:600;
+    font-size: 3em;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    text-shadow: 0 0 5px #ccc77b;
+}
+
+.form-data{
+    box-sizing: border-box;
+    width: 80%;
+    padding: 30px 50px;
+    margin: auto;
+    background-color: #c2421845;
+    border-radius: 10px;
+    box-shadow: 0 0 25px #bbb;
+}
+
+.fieldset{
+    text-align: left;
+    width: 90%;
+    border-radius: 5px;
+    padding: 10px;
+    margin: auto;
+    border: 1px solid #bbb;
+    margin-bottom: 25px;
+}
+
+.legend{
+    text-align: left;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.div-2{
+    width: 40%;
+    flex: auto;
+}
+
+.div-inline{
+    display: flex;
+}
+
+.label{
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    font-weight: 100;
+    max-width: 50%;
+    width: 500px;
+    text-align: left;
+    margin: 10px;
+    padding: 20px 0;
+    }
+
+.probabilidad{
+    margin-right: 5.35%;
+}
+
+.tiempo{
+    margin-right: 16%;
+}
+
+.input{
+    width: 13%;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 10px 20px 10px 25%;
+    color: #ccc;
+    padding: 2px 2px 2px 10px;
+    font-weight: 600; 
+}
+
+.input:valid{
+    background-color: #27d6;
+}
+
+.input:invalid{
+    background-color: #b11c;
+}
+
+.input-2{
+    margin-left: 10px;
+    width: 25%;
+}
+
+h2{
+    font-weight: 100;
+    text-align: center;
+}
+
+.button{
+    width: 180px;
+    height: 50px;
+    border-radius: 5px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    color: #eee;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.submit{
+    background-color: #27d6;
+}
+
+.reset{
+    background-color: rgb(172, 43, 28);
+}
+
+.div-table{
+    box-sizing: border-box;
+    width: 80%;
+    padding: 30px 50px;
+    margin: auto;
+    background-color: #c2421845;
+    border-radius: 10px;
+    box-shadow: 0 0 25px #bbb;
+    margin-top: 40px;
+}
+
+.title-div-1{
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 5px;
+    word-spacing: 10px;
+    margin: 8px 8px 30px 8px;
+    padding: 0;
+}
+
+th, td{
+    padding: 6px;
+    min-width: 180px; /* Ancho mínimo del 20% para las columnas */
+    box-sizing: border-box; /* Para incluir el padding en el ancho */
+}
+
+th{
+    background-color: #222;
+    height: 40px;
+
+}
+
+td{
+    background-color: #bbb;
+    color: #333;
+}
+
+tr:nth-child(even) td {
+    background-color: #bbb; /* Color para filas pares */
+    color: #333;
+}
+tr:nth-child(odd) td {
+    background-color: #eee; /* Color para filas impares */
+    color: #333;
+}
+
+table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 3px;
+    overflow-x: auto; /* Agregamos el scroll horizontal */
+    overflow-y: auto;
+}
+
+.table-container{
+    width: 100%;
+    overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+}
