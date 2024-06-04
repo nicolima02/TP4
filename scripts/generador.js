@@ -30,7 +30,6 @@ export const generarDatos = (datosForm)=>{
         let peluquerosList = {aprendiz,veteranoA,veteranoB}
         //llegada del primer cliente
         while(abierto) {
-            console.log(clientes.length);
             if (reloj === 0) {
                 numeroCliente = 0;
                 peluquero = "";
@@ -105,6 +104,6 @@ export const generarDatos = (datosForm)=>{
                 fila.numero = index + 1;
             });
         };
-        generarTabla(filasAgregadas,datosForm)
+        generarTabla(filasAgregadas,recaudacion.maxEsperaSimultanea);
     }
 };
