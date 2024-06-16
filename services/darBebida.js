@@ -11,7 +11,7 @@ export const darBebida = (reloj,clientes, esperas,recaudacion) =>{
         if (c.estado === "EE"){
             esperas.esperaSimultaneas++;
         }
-        if(esperas.esperaSimultaneas > esperaAnterior){
+        if(esperas.esperaSimultaneas > esperaAnterior && esperas.esperaSimultaneas > esperas.maxEsperaSimultanea){
             esperas.maxEsperaSimultanea = esperas.esperaSimultaneas;
         }
     })

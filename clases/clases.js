@@ -13,7 +13,7 @@ export class DatosFormulario {
 
 
 export class Fila{
-    constructor(numero, control, relojAMostrar, llegadaCliente, asignacionPeluquero, finAtencionPeluquero, aprendiz, veteranoA, veteranoB, recaudacion, esperas, clientes){
+    constructor(numero, control, relojAMostrar, llegadaCliente, asignacionPeluquero, finAtencionPeluquero, aprendiz, veteranoA, veteranoB, recaudacion, esperas, clientes, dia){
     this.numero = numero;
     this.control = control;
     this.relojAMostrar = relojAMostrar;
@@ -26,6 +26,7 @@ export class Fila{
     this.recaudacion = recaudacion;
     this.esperas = esperas;
     this.clientes = clientes;
+    this.dia = dia;
     }
 }
 

@@ -1,6 +1,6 @@
 
 export const generarTabla = (filas, maxEsperaSimultanea) => {
-    console.log(filas[0]);
+    console.log(maxEsperaSimultanea);
     const table = document.createElement('table');
     table.classList.add('table-data');
     const tableContainer = document.getElementById('table-container');
@@ -14,8 +14,7 @@ export const generarTabla = (filas, maxEsperaSimultanea) => {
     const fila3 = document.createElement('tr')
     // Control
     fila1.appendChild(crearEncabezado('Control', 5));
-    fila2.appendChild(crearSubEncabezado(['1', filas[0].control, filas[0].llegadaCliente.dia, filas[0].relojAMostrar, '']))
-    //fila2.appendChild(crearSubEncabezado(['Numero', 'Evento', 'Dia', 'Reloj(Segundos)', 'Reloj']));
+    fila2.appendChild(crearSubEncabezado(['Numero', 'Evento', 'Dia', 'Reloj(Segundos)', 'Reloj']));
 
     // Proxima Llegada
     fila1.appendChild(crearEncabezado('Proxima Llegada', 3));
@@ -58,7 +57,7 @@ export const generarTabla = (filas, maxEsperaSimultanea) => {
     fila2.appendChild(crearSubEncabezado(['Esperas Simultaneas', 'Maximo de Esperas Simultaneas']));
 
     // Clientes
-    for (let i = 1; i <= maxEsperaSimultanea; i++) {
+    for (let i = 1; i <= maxEsperaSimultanea+3; i++) {
         fila1.appendChild(crearEncabezado(`Cliente ${i}`, 4));
         fila2.appendChild(crearSubEncabezado(['Estado', 'Peluquero', 'Momento de Refresco', 'Refresco']));
     }
