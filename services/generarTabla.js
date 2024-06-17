@@ -57,10 +57,15 @@ export const generarTabla = (filas, maxEsperaSimultanea) => {
     fila2.appendChild(crearSubEncabezado(['Esperas Simultaneas', 'Maximo de Esperas Simultaneas']));
 
     // Clientes
-    for (let i = 1; i <= maxEsperaSimultanea+3; i++) {
+    // for (let i = 1; i <= maxEsperaSimultanea+3; i++) {
+    //     fila1.appendChild(crearEncabezado(`Cliente ${i}`, 4));
+    //     fila2.appendChild(crearSubEncabezado(['Estado', 'Peluquero', 'Momento de Refresco', 'Refresco']));
+    // }
+    for (let i = 1; i <= filas[filas.length-2].clientes[0].numero; i++) {
         fila1.appendChild(crearEncabezado(`Cliente ${i}`, 4));
         fila2.appendChild(crearSubEncabezado(['Estado', 'Peluquero', 'Momento de Refresco', 'Refresco']));
     }
+
 
     thead.appendChild(fila1);
     thead.appendChild(fila2);

@@ -47,30 +47,32 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         row.insertCell().textContent = fila.esperas.esperaSimultaneas;
         row.insertCell().textContent = fila.esperas.maxEsperaSimultanea;
         
-        // Agregar columnas para cada cliente
+        // Agregar columnas para cada cliente reutilizando
+        // let arrAux = [];
+        //     for(let i = 0; i < filasAMostrar[filasAMostrar.length-1].esperas.maxEsperaSimultanea+3;i++){
+        //         arrAux.push({numero:i+1,estado:null,peluquero:'',momentoRefresco:'',refresco:null});
+        //     }
+        //     for (let i = 0; i < filasAMostrar[filasAMostrar.length-1].esperas.maxEsperaSimultanea+3; i++) {
+        //         if (fila.clientes[i]?.estado) {
+        //             arrAux[fila.clientes[i].numero-1] = fila.clientes[i];
+        //     }
+        // }
+        // arrAux.forEach(c=>{
+        //     row.insertCell().textContent = c.estado || '';
+        //     row.insertCell().textContent = c.peluquero || '';
+        //     row.insertCell().textContent = c.momentoRefresco || '';
+        //     row.insertCell().textContent = c.refresco;
+        // })
+        //Agregar una columna para cada cliente
         let arrAux = [];
-            for(let i = 0; i < filasAMostrar[filasAMostrar.length-1].esperas.maxEsperaSimultanea+3;i++){
-                arrAux.push({numero:i+1,estado:null,peluquero:'',momentoRefresco:'',refresco:null});
-            }
-            for (let i = 0; i < filasAMostrar[filasAMostrar.length-1].esperas.maxEsperaSimultanea+3; i++) {
-                if (fila.clientes[i]?.estado) {
-                    arrAux[fila.clientes[i].numero-1] = fila.clientes[i];
+        for(let i = 0; i< filasAMostrar[filasAMostrar.length-2].clientes[0].numero;i++){
+            arrAux.push({numero:i+1,estado:null,peluquero:'',momentoRefresco:'',refresco:null});
+        }
+        for (let i = 0; i < arrAux.length; i++) {
+            if (fila.clientes[i]?.estado) {
+                arrAux[fila.clientes[i].numero-1] = fila.clientes[i];
             }
         }
-        //     while (recorrido < filasAMostrar[filasAMostrar.length-1].esperas.maxEsperaSimultanea+3 || flag === true) {
-        //         recorrido++; 
-        //         if(fila.clientes[i]?.numero === recorrido){
-        //             row.insertCell().textContent = fila.clientes[i].estado;
-        //             row.insertCell().textContent = fila.clientes[i].peluquero;
-        //             row.insertCell().textContent = fila.clientes[i].momentoRefresco;
-        //             row.insertCell().textContent = fila.clientes[i].refresco;
-        //         }else{
-        //             row.insertCell().textContent = '';
-        //             row.insertCell().textContent = '';
-        //             row.insertCell().textContent = '';
-        //             row.insertCell().textContent = '';
-        //         }
-        // }
         arrAux.forEach(c=>{
             row.insertCell().textContent = c.estado || '';
             row.insertCell().textContent = c.peluquero || '';
@@ -78,5 +80,5 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
             row.insertCell().textContent = c.refresco;
         })
     }
-})
+    })
 }

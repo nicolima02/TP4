@@ -16,6 +16,7 @@ export const generarDatos = (datosForm)=>{
         //inicializar las variable para el primer dia de apertura
         let eventos = [];
         const filas = [];
+        let numeroCliente = 0;
         const horaCierre = 60*8;
         let reloj = 0;
         let dia = 1;
@@ -75,7 +76,8 @@ export const generarDatos = (datosForm)=>{
                     let cliente = "";
                     clientes.sort((a,b)=>a.numero - b.numero);
                     liberacionPeluquero(reloj,aprendiz,veteranoA,veteranoB,filas,clientes,eventos,dia,datosForm,recaudacion);
-                    const numeroCliente = getNumeroCliente(clientes);              
+                    //const numeroCliente = getNumeroCliente(clientes);              
+                    numeroCliente++;
                     cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+30), false);           
                     peluquero = asignacionPeluquero(datosForm, aprendiz,veteranoA,veteranoB, cliente,reloj,eventos,dia);
                     const clientesActualesFin = clientes.map(cliente => ({ ...cliente }));                   
