@@ -9,14 +9,13 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         }else if (fila.finAtencionPeluquero?.nombre == "FinAtencionVeteranoB") {
             fila.finAtencionVeteranoB = {random:fila.finAtencionPeluquero.random, demora:fila.finAtencionPeluquero.demora, finAtencion:fila.finAtencionPeluquero.finAtencion};
         }
-        if (fila.numero >= datosForm.rango[0] && fila.numero <= datosForm.rango[1]) {
+        if ((fila.numero >= datosForm.rango[0] && fila.numero <= datosForm.rango[1]) || fila.numero == filasAMostrar.length) {
             
         let row = tablaFilas.insertRow();
         
         row.insertCell().textContent = fila.numero;
         row.insertCell().textContent = fila.control.nombre;
         row.insertCell().textContent = fila.dia;
-        row.insertCell().textContent = fila.reloj;
         row.insertCell().textContent = fila.relojAMostrar;
         row.insertCell().textContent = fila.llegadaCliente?.random || '';
         row.insertCell().textContent = fila.llegadaCliente?.demora || '';

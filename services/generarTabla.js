@@ -13,8 +13,8 @@ export const generarTabla = (filas, maxEsperaSimultanea) => {
     const fila2 = document.createElement('tr');
     const fila3 = document.createElement('tr')
     // Control
-    fila1.appendChild(crearEncabezado('Control', 5));
-    fila2.appendChild(crearSubEncabezado(['Numero', 'Evento', 'Dia', 'Reloj(Segundos)', 'Reloj']));
+    fila1.appendChild(crearEncabezado('Control', 4));
+    fila2.appendChild(crearSubEncabezado(['Numero', 'Evento', 'Dia', 'Reloj']));
 
     // Proxima Llegada
     fila1.appendChild(crearEncabezado('Proxima Llegada', 3));
