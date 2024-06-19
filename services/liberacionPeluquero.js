@@ -13,7 +13,7 @@ export const liberacionPeluquero = (reloj,aprendiz,veteranoA,veteranoB,filas,cli
                     }
                 }
                 aprendiz.estado = "L";
-            }else{
+            }else if(aprendiz.cola.length >= 1){
                 for(let i = 0; i < clientes.length; i++){
                     if (clientes[i].estado === "SA" && clientes[i].peluquero === "Aprendiz"){
                         clientes.splice(i, 1);
@@ -36,7 +36,7 @@ export const liberacionPeluquero = (reloj,aprendiz,veteranoA,veteranoB,filas,cli
                     }
                 }
                 veteranoA.estado = "L";
-            }else{
+            }else if(veteranoA.cola.length >= 1){
                 for(let i = 0; i < clientes.length; i++){
                     if (clientes[i].estado === "SA" && clientes[i].peluquero === "Veterano A"){
                         clientes.splice(i, 1);
@@ -60,7 +60,7 @@ export const liberacionPeluquero = (reloj,aprendiz,veteranoA,veteranoB,filas,cli
                     }
                 }
                 veteranoB.estado = "L";
-            }else{
+            }else if(veteranoB.cola.length >= 1){
                 for(let i = 0; i < clientes.length; i++){
                     if (clientes[i].estado === "SA" && clientes[i].peluquero === "Veterano B"){
                         clientes.splice(i, 1);
