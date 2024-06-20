@@ -80,10 +80,15 @@ export const generarDatos = (datosForm)=>{
                     cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+30), false);           
                     liberacionPeluquero(reloj,aprendiz,veteranoA,veteranoB,filas,clientes,eventos,dia,datosForm,recaudacion);
                     const clientesActualesFin = clientes.map(cliente => ({ ...cliente })); 
-                    const aprendizActual1 = {estado: aprendiz.estado ,cola: aprendiz.cola.map(cliente => ({ ...cliente })), clientesAtendidos:aprendiz.clientesAtendidos};
-                    const veteranoAActual1 = {...veteranoA}
-                    veteranoAActual1.cola = veteranoA.cola.map(cliente => ({ ...cliente }));
-                    const veteranoBActual1 = veteranoB.cola.map(cliente => ({ ...cliente }));                   
+                    const veteranoAActual = {...veteranoA};
+                    const aprendizActual  = {...aprendiz};
+                    const veteranoBActual = {...veteranoB};
+                    const colaVeteranoA = veteranoA.cola.length == 0 ? [] : veteranoA.cola.map(cliente => ({ ...cliente }));
+                    veteranoAActual.cola = colaVeteranoA;
+                    const colaAprendiz = aprendiz.cola.length == 0 ? [] : aprendiz.cola.map(cliente => ({ ...cliente }));
+                    aprendizActual.cola = colaAprendiz;
+                    const colaVeteranoB = veteranoB.cola.length == 0 ? [] : veteranoB.cola.map(cliente => ({ ...cliente }));
+                    veteranoBActual.cola = colaVeteranoB;
                     peluquero = asignacionPeluquero(datosForm, aprendiz,veteranoA,veteranoB, cliente,reloj,eventos,dia);
                 if (llegadaClienteF.relojAMostrar < horaCierre) {
                     llegadaClienteF.asignacionPeluquero = peluquero;
@@ -118,7 +123,7 @@ export const generarDatos = (datosForm)=>{
                             
                             finAtencionP = new Fila(filas.length+1, 
                                 {nombre:eventos[i].evento.constructor.name, demora:eventos[i].evento.demora, finAtencion:eventos[i].evento.finAtencion, random:eventos[i].evento.random},
-                                eventos[i].reloj, null, null, null, aprendiz, veteranoAActual1, veteranoB, recaudacionActual,
+                                eventos[i].reloj, null, null, null, aprendiz, veteranoA, veteranoB, recaudacionActual,
                                 esperaActual, null, dia);
                             filas.push(finAtencionP);
                         }
@@ -132,10 +137,10 @@ export const generarDatos = (datosForm)=>{
                     if(filas[index].relojAMostrar <= reloj){
                         if (filas[index]?.control?.nombre !== "Apertura") {
                         if (filas[index]?.control?.nombre === "LlegadaCliente") {
-                            const aprendizActual = {...aprendiz};
                             const colaAprendiz = aprendiz.cola.length == 0 ? [] : aprendiz.cola.map(cliente => ({ ...cliente }));
                             const colaVeteranoA = veteranoA.cola.length == 0 ? [] : veteranoA.cola.map(cliente => ({ ...cliente }));
                             const colaVeteranoB = veteranoB.cola.length == 0 ? [] : veteranoB.cola.map(cliente => ({ ...cliente }));
+                            const aprendizActual = {...aprendiz};
                             const veteranoAActual = {...veteranoA};
                             const veteranoBActual = {...veteranoB};
                             filas[index].aprendiz = aprendizActual;
@@ -151,10 +156,9 @@ export const generarDatos = (datosForm)=>{
                         filas[index].esperas = esperaActual;
                         if (filas[index].control.nombre !== "Apertura" && filas[index].control.nombre !== "LlegadaCliente") {
                             filas[index].clientes = clientesActualesFin;
-                            //filas[index].aprendiz.cola = aprendizActual1;
-                            //filas[index].veteranoA.cola = veteranoAActual1;
-                            //filas[index].veteranoB.cola = veteranoBActual1;
-                            console.log(filas[index]);
+                            filas[index].veteranoA= veteranoAActual;
+                            filas[index].aprendiz = aprendizActual;
+                            filas[index].veteranoB = veteranoBActual;
                         }
                     }
                     filasAgregadas.push(filas[index]);
