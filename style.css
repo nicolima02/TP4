@@ -191,6 +191,8 @@ table{
     position: -webkit-sticky; /* Necesario para Safari */
     position: sticky;
     left: 0;
+    border-right-style: solid;
+    border-right-width: 2px;
 }
 
 .sticky-col + .sticky-col {
