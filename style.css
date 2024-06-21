@@ -147,9 +147,17 @@ th, td{
 }
 
 th{
-    background-color: #222;
     height: 40px;
+    position: sticky;
+}
 
+
+thead{
+    position: sticky;
+    top: 0;
+    background-color: #222;
+    z-index: 1; /* Asegúrate de que la cabecera quede encima del contenido */
+    padding: 10px;
 }
 
 td{
@@ -170,8 +178,6 @@ table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 3px;
-    overflow-x: auto; /* Agregamos el scroll horizontal */
-    overflow-y: auto;
 }
 
 .table-container{
@@ -179,4 +185,14 @@ table{
     overflow-x: auto;
     max-height: 500px;
     overflow-y: auto;
+}
+
+.sticky-col {
+    position: -webkit-sticky; /* Necesario para Safari */
+    position: sticky;
+    left: 0;
+}
+
+.sticky-col + .sticky-col {
+    left: 184px; /* Ajusta este valor según el ancho de la columna fija */
 }

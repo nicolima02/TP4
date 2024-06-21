@@ -66,7 +66,6 @@ export const generarTabla = (filas, maxEsperaSimultanea) => {
         fila2.appendChild(crearSubEncabezado(['Estado', 'Peluquero', 'Momento de Refresco', 'Refresco']));
     }
 
-
     thead.appendChild(fila1);
     thead.appendChild(fila2);
     table.appendChild(thead);

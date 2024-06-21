@@ -14,7 +14,9 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         let row = tablaFilas.insertRow();
         
         row.insertCell().textContent = fila.numero;
+        row.cells[0].classList.add('sticky-col');
         row.insertCell().textContent = fila.control.nombre;
+        row.cells[1].classList.add('sticky-col');
         row.insertCell().textContent = fila.dia;
         row.insertCell().textContent = fila.relojAMostrar;
         row.insertCell().textContent = fila.llegadaCliente?.random || '';
