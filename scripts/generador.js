@@ -29,9 +29,11 @@ export const generarDatos = (datosForm)=>{
         let llegadaClienteF = null;
         let clientes = [];
         let filasAgregadas = [];
+        let evento1 = null;
         let sa = false;
         let peluquerosList = {aprendiz,veteranoA,veteranoB}
         //llegada del primer cliente
+        let cliente = "";
         while(abierto) {
             if (reloj === 0) {
                 peluquero = "";
@@ -45,7 +47,6 @@ export const generarDatos = (datosForm)=>{
                 finAtencionP = null;
                 llegadaClienteF = null;
                 clientes = [];          
-                
                 peluquerosList = {aprendiz,veteranoA,veteranoB}
                 const aprendizActual = {...peluquerosList.aprendiz};
                 const veteranoAActual = {...peluquerosList.veteranoA};
@@ -66,20 +67,32 @@ export const generarDatos = (datosForm)=>{
                     };
                     continue;
                 }
-                reloj = eventos[0]?.evento.llegada >= horaCierre ? filas[0].relojAMostrar : eventos[0]?.evento.llegada;
+                if (evento1) {
+                    eventos.unshift(evento1);
+                    eventos.sort((a,b)=>a.evento.reloj - b.evento.reloj)
+                }
+                if (eventos[0]?.evento?.llegada > filas[0]?.relojAMostrar && reloj !== 0){
+                    reloj = filas[0].relojAMostrar
+                    evento1 = eventos[0];
+                }else{
+                    evento1 = null
+                    reloj = eventos[0]?.evento.llegada >= horaCierre ? filas[0]?.relojAMostrar : eventos[0]?.evento.llegada;
+                }
+                
                 eventos = [];
+                if (!evento1) {
                     llegadaCliente(reloj,eventos,dia);
                     llegadaClienteF = new Fila(filas.length+1, {nombre:eventos[0].evento.constructor.name, demora:eventos[0].evento.demora, llegada:eventos[0].evento.llegada}
-                            , reloj, {nombre:eventos[0].evento.constructor.name, demora:eventos[0].evento.demora, llegada:eventos[0].evento.llegada, random:eventos[0].evento.random},
-                            {peluquero:peluquero.peluquero, random:peluquero.random},"finAtencionP",
-                            {clientesAtendidos:aprendiz.clientesAtendidos,estado:aprendiz.estado},{clientesAtendidos:veteranoA.clientesAtendidos,estado:veteranoA.estado},
-                            {clientesAtendidos:veteranoB.clientesAtendidos,estado:veteranoB.estado}, {gananciasDiarias:recaudacion.gananciasDiarias, gastosDiarios:recaudacion.gastosDiarios,gananciasNetas:recaudacion.gananciasNetas},
-                            "",clientes, dia);       
-                    let cliente = "";
-                    clientes.sort((a,b)=>a.numero - b.numero);
-                    //const numeroCliente = getNumeroCliente(clientes);              
-                    numeroCliente++;
-                    cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+5), false);           
+                        , reloj, {nombre:eventos[0].evento.constructor.name, demora:eventos[0].evento.demora, llegada:eventos[0].evento.llegada, random:eventos[0].evento.random},
+                        {peluquero:peluquero.peluquero, random:peluquero.random},"finAtencionP",
+                        {clientesAtendidos:aprendiz.clientesAtendidos,estado:aprendiz.estado},{clientesAtendidos:veteranoA.clientesAtendidos,estado:veteranoA.estado},
+                        {clientesAtendidos:veteranoB.clientesAtendidos,estado:veteranoB.estado}, {gananciasDiarias:recaudacion.gananciasDiarias, gastosDiarios:recaudacion.gastosDiarios,gananciasNetas:recaudacion.gananciasNetas},
+                        "",clientes, dia);       
+                        clientes.sort((a,b)=>a.numero - b.numero);
+                        //const numeroCliente = getNumeroCliente(clientes);              
+                        numeroCliente++;
+                        cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+30), false);           
+                    }
                     liberacionPeluquero(reloj,aprendiz,veteranoA,veteranoB,filas,clientes,eventos,dia,datosForm,recaudacion);
                     const clientesActualesFin = clientes.map(cliente => ({ ...cliente }));
                     const recaudacionActual1 = {...recaudacion};
@@ -91,13 +104,15 @@ export const generarDatos = (datosForm)=>{
                     const colaAprendiz = aprendiz.cola.length == 0 ? [] : aprendiz.cola.map(cliente => ({ ...cliente }));
                     aprendizActual.cola = colaAprendiz;
                     const colaVeteranoB = veteranoB.cola.length == 0 ? [] : veteranoB.cola.map(cliente => ({ ...cliente }));
-                    veteranoBActual.cola = colaVeteranoB;
-                    ({peluquero,sa} = asignacionPeluquero(datosForm, aprendiz,veteranoA,veteranoB, cliente,reloj,eventos,dia));
-                if (llegadaClienteF.relojAMostrar < horaCierre) {
+                    veteranoBActual.cola = colaVeteranoB;                   
+                    if (filas[0]?.relojAMostrar !== reloj) {
+                        ({peluquero,sa} = asignacionPeluquero(datosForm, aprendiz,veteranoA,veteranoB, cliente,reloj,eventos,dia));
+                    }
+                if (llegadaClienteF?.relojAMostrar < horaCierre && !evento1) {
                     llegadaClienteF.asignacionPeluquero = peluquero;
                     if(eventos.length === 2 && !sa){
                         llegadaClienteF.finAtencionPeluquero = null;
-                    }else{
+                    }else if(!evento1){
                         llegadaClienteF.finAtencionPeluquero = eventos[eventos.length-1].evento.finAtencion && eventos.length >=3 ? {nombre:eventos[eventos.length-1]?.evento.constructor.name,demora:eventos[eventos.length-1]?.evento.demora,finAtencion:eventos[eventos.length-1]?.evento.finAtencion,random:eventos[eventos.length-1]?.evento.random} : {nombre:eventos[1]?.evento.constructor.name,demora:eventos[1]?.evento.demora,finAtencion:eventos[1]?.evento.finAtencion,random:eventos[1]?.evento.random};
                     }
                     if(reloj <= horaCierre){
@@ -143,7 +158,7 @@ export const generarDatos = (datosForm)=>{
                 for(let index = filas.length - 1; index >= 0; index--){
                     if(filas[index].relojAMostrar <= reloj){
                         if (filas[index]?.control?.nombre !== "Apertura") {
-                            if (filas[index]?.control?.nombre === "LlegadaCliente") {
+                            if (filas[index]?.control?.nombre === "LlegadaCliente" && !evento1) {
                             darBebida(reloj,clientes, esperas,recaudacion);
                             const colaAprendiz = aprendiz.cola.length == 0 ? [] : aprendiz.cola.map(cliente => ({ ...cliente }));
                             const colaVeteranoA = veteranoA.cola.length == 0 ? [] : veteranoA.cola.map(cliente => ({ ...cliente }));

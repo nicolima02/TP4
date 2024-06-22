@@ -71,6 +71,7 @@ export const liberacionPeluquero = (reloj,aprendiz,veteranoA,veteranoB,filas,cli
                 veteranoB.cola[0].estado = "SA";
                 veteranoB.cola.splice(0, 1);
             }
+            
         }
     });
     recaudacion.promedioRecaudacion = recaudacion.gananciasNetas / dia || 0;

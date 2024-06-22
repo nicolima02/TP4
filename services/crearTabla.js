@@ -1,6 +1,11 @@
 export const  crearTabla = (filasAMostrar,datosForm) =>{
     console.log(filasAMostrar);
     let tablaFilas = document.querySelector('.tbody');
+    let cont = 0;
+    let finAprendiz = ""
+    let finVeteranoA  = ""
+    let finVeteranoB = ""
+    let llegada = ""
     filasAMostrar.forEach(fila => {
         if (fila.finAtencionPeluquero?.nombre == "FinAtencionAprendiz") {
             fila.finAtencionAprendiz = {random:fila.finAtencionPeluquero.random, demora:fila.finAtencionPeluquero.demora, finAtencion:fila.finAtencionPeluquero.finAtencion};
@@ -12,7 +17,27 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         if ((fila.numero >= datosForm.rango[0] && fila.numero <= datosForm.rango[1]) || fila.numero == filasAMostrar.length) {
             
         let row = tablaFilas.insertRow();
-        
+        if (fila?.control?.nombre === "FinAtencionAprendiz") {
+            finAprendiz = ""
+        }
+        if (fila?.control?.nombre === "FinAtencionVeteranoA") {
+            finVeteranoA= ""
+        }
+        if (fila?.control?.nombre === "FinAtencionVeteranoB") {
+            finVeteranoB = ""
+        }
+        if (fila.llegadaCliente?.llegada) {
+            llegada = fila.llegadaCliente?.llegada
+        }
+        if (fila?.finAtencionPeluquero?.nombre === "FinAtencionAprendiz") {
+            finAprendiz = fila.finAtencionPeluquero?.finAtencion
+        }
+        if (fila?.finAtencionPeluquero?.nombre === "FinAtencionVeteranoA") {
+            finVeteranoA = fila.finAtencionPeluquero?.finAtencion
+        }
+        if (fila?.finAtencionPeluquero?.nombre === "FinAtencionVeteranoB") {
+            finVeteranoB = fila.finAtencionPeluquero?.finAtencion
+        }
         row.insertCell().textContent = fila.numero;
         row.cells[0].classList.add('sticky-col');
         row.insertCell().textContent = fila.control.nombre;
@@ -21,18 +46,18 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         row.insertCell().textContent = fila.relojAMostrar;
         row.insertCell().textContent = fila.llegadaCliente?.random || '';
         row.insertCell().textContent = fila.llegadaCliente?.demora || '';
-        row.insertCell().textContent = fila.llegadaCliente?.llegada || '';
+        row.insertCell().textContent = fila.llegadaCliente?.llegada || llegada;
         row.insertCell().textContent = fila.asignacionPeluquero?.random || '';
         row.insertCell().textContent = fila.asignacionPeluquero?.peluquero || '';
         row.insertCell().textContent = fila.finAtencionAprendiz?.random || '';
         row.insertCell().textContent = fila.finAtencionAprendiz?.demora || '';
-        row.insertCell().textContent = fila.finAtencionAprendiz?.finAtencion || '' ;
+        row.insertCell().textContent = fila.finAtencionAprendiz?.finAtencion || finAprendiz ;
         row.insertCell().textContent = fila.finAtencionVeteranoA?.random || '';
         row.insertCell().textContent = fila.finAtencionVeteranoA?.demora || '';
-        row.insertCell().textContent = fila.finAtencionVeteranoA?.finAtencion || '';
+        row.insertCell().textContent = fila.finAtencionVeteranoA?.finAtencion || finVeteranoA;
         row.insertCell().textContent = fila.finAtencionVeteranoB?.random || '';
         row.insertCell().textContent = fila.finAtencionVeteranoB?.demora || '';
-        row.insertCell().textContent = fila.finAtencionVeteranoB?.finAtencion || '';
+        row.insertCell().textContent = fila.finAtencionVeteranoB?.finAtencion || finVeteranoB;
         row.insertCell().textContent = fila.aprendiz.estado;
         row.insertCell().textContent = fila.aprendiz.cola.length;
         row.insertCell().textContent = fila.aprendiz.clientesAtendidos;
@@ -82,5 +107,6 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
             row.insertCell().textContent = c.refresco;
         })
     }
+    cont++
     })
 }
