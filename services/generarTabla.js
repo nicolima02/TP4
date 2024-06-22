@@ -1,6 +1,5 @@
 
 export const generarTabla = (filas, maxEsperaSimultanea) => {
-    console.log(maxEsperaSimultanea);
     const table = document.createElement('table');
     table.classList.add('table-data');
     const tableContainer = document.getElementById('table-container');

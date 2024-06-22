@@ -78,7 +78,10 @@ export const generarDatos = (datosForm)=>{
                     evento1 = null
                     reloj = eventos[0]?.evento.llegada >= horaCierre ? filas[0]?.relojAMostrar : eventos[0]?.evento.llegada;
                 }
-                
+                console.log(reloj);
+                if (reloj === undefined) {
+                    break
+                }
                 eventos = [];
                 if (!evento1) {
                     llegadaCliente(reloj,eventos,dia);
