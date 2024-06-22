@@ -7,6 +7,7 @@ import { finAtencion } from "./finAtencion.js";
 export const asignacionPeluquero = (datosForm, aprendiz,veteranoA,veteranoB, cliente, reloj, eventos, dia) =>{
     let rnd = generarRandom().toFixed(2);
     let peluquero = "";
+    let sa = false;
     if (rnd < datosForm.aprendiz[0]) {
         peluquero = "Aprendiz";
         peluquero = new AsignacionPeluquero(rnd,peluquero);
@@ -15,6 +16,7 @@ export const asignacionPeluquero = (datosForm, aprendiz,veteranoA,veteranoB, cli
             cliente.peluquero = "Aprendiz";
             cliente.estado = "SA";
             finAtencion(reloj,eventos,peluquero,datosForm,dia);
+            sa = true
         }else if(reloj<60*8){
             cliente.peluquero = "Aprendiz";
             aprendiz.cola.push(cliente);
@@ -27,6 +29,7 @@ export const asignacionPeluquero = (datosForm, aprendiz,veteranoA,veteranoB, cli
             cliente.peluquero = "Veterano A";
             cliente.estado = "SA";
             finAtencion(reloj,eventos,peluquero,datosForm,dia);
+            sa = true
         }else if(reloj<60*8){
             cliente.peluquero = "Veterano A";
             veteranoA.cola.push(cliente);
@@ -39,12 +42,13 @@ export const asignacionPeluquero = (datosForm, aprendiz,veteranoA,veteranoB, cli
             cliente.peluquero = "Veterano B";
             cliente.estado = "SA";
             finAtencion(reloj,eventos,peluquero,datosForm,dia);
+            sa = true
         }else if(reloj<60*8){
             cliente.peluquero = "Veterano B";
             veteranoB.cola.push(cliente);
         }
     }
     
-    return peluquero;
+    return {peluquero, sa};
 };
 

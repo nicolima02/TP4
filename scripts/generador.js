@@ -29,11 +29,13 @@ export const generarDatos = (datosForm)=>{
         let llegadaClienteF = null;
         let clientes = [];
         let filasAgregadas = [];
+        let sa = false;
         let peluquerosList = {aprendiz,veteranoA,veteranoB}
         //llegada del primer cliente
         while(abierto) {
             if (reloj === 0) {
                 peluquero = "";
+                sa = false
                 aprendiz.estado = "L"
                 aprendiz.cola = [] 
                 veteranoA.estado = "L"
@@ -53,7 +55,7 @@ export const generarDatos = (datosForm)=>{
                 filas.push(new Fila(1, {nombre:"Apertura"}, reloj, {nombre:eventos[0].evento.constructor.name, demora:eventos[0].evento.demora, llegada:eventos[0].evento.llegada, random:eventos[0].evento.random}, null, null, aprendizActual, veteranoAActual, veteranoBActual, {gananciasDiarias:recaudacion.gananciasDiarias, gastosDiarios:recaudacion.gastosDiarios,gananciasNetas:recaudacion.gananciasNetas}, esperaActual, clientes, dia));
             }
             //reloj = eventos[0]?.evento.llegada
-            darBebida(reloj,clientes, esperas,recaudacion);
+            
             if (reloj >= horaCierre && clientes.length === 0){ //mejorar para que no termine en un dia, agregar un if que controle si dia > datosForm.dia
                 recaudacion.gananciasDiarias = 0;
                 dia++;
@@ -72,14 +74,15 @@ export const generarDatos = (datosForm)=>{
                             {peluquero:peluquero.peluquero, random:peluquero.random},"finAtencionP",
                             {clientesAtendidos:aprendiz.clientesAtendidos,estado:aprendiz.estado},{clientesAtendidos:veteranoA.clientesAtendidos,estado:veteranoA.estado},
                             {clientesAtendidos:veteranoB.clientesAtendidos,estado:veteranoB.estado}, {gananciasDiarias:recaudacion.gananciasDiarias, gastosDiarios:recaudacion.gastosDiarios,gananciasNetas:recaudacion.gananciasNetas},
-                            {esperaSimulataneas:esperas.esperaSimultaneas, maxEsperaSimultanea:esperas.maxEsperaSimultanea},clientes, dia);       
+                            "",clientes, dia);       
                     let cliente = "";
                     clientes.sort((a,b)=>a.numero - b.numero);
                     //const numeroCliente = getNumeroCliente(clientes);              
                     numeroCliente++;
-                    cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+30), false);           
+                    cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+5), false);           
                     liberacionPeluquero(reloj,aprendiz,veteranoA,veteranoB,filas,clientes,eventos,dia,datosForm,recaudacion);
-                    const clientesActualesFin = clientes.map(cliente => ({ ...cliente })); 
+                    const clientesActualesFin = clientes.map(cliente => ({ ...cliente }));
+                    const recaudacionActual1 = {...recaudacion};
                     const veteranoAActual = {...veteranoA};
                     const aprendizActual  = {...aprendiz};
                     const veteranoBActual = {...veteranoB};
@@ -89,10 +92,14 @@ export const generarDatos = (datosForm)=>{
                     aprendizActual.cola = colaAprendiz;
                     const colaVeteranoB = veteranoB.cola.length == 0 ? [] : veteranoB.cola.map(cliente => ({ ...cliente }));
                     veteranoBActual.cola = colaVeteranoB;
-                    peluquero = asignacionPeluquero(datosForm, aprendiz,veteranoA,veteranoB, cliente,reloj,eventos,dia);
+                    ({peluquero,sa} = asignacionPeluquero(datosForm, aprendiz,veteranoA,veteranoB, cliente,reloj,eventos,dia));
                 if (llegadaClienteF.relojAMostrar < horaCierre) {
                     llegadaClienteF.asignacionPeluquero = peluquero;
-                    llegadaClienteF.finAtencionPeluquero = eventos[eventos.length-1].evento.finAtencion ? {nombre:eventos[1]?.evento.constructor.name,demora:eventos[1]?.evento.demora,finAtencion:eventos[1]?.evento.finAtencion,random:eventos[1]?.evento.random} : null;
+                    if(eventos.length === 2 && !sa){
+                        llegadaClienteF.finAtencionPeluquero = null;
+                    }else{
+                        llegadaClienteF.finAtencionPeluquero = eventos[eventos.length-1].evento.finAtencion && eventos.length >=3 ? {nombre:eventos[eventos.length-1]?.evento.constructor.name,demora:eventos[eventos.length-1]?.evento.demora,finAtencion:eventos[eventos.length-1]?.evento.finAtencion,random:eventos[eventos.length-1]?.evento.random} : {nombre:eventos[1]?.evento.constructor.name,demora:eventos[1]?.evento.demora,finAtencion:eventos[1]?.evento.finAtencion,random:eventos[1]?.evento.random};
+                    }
                     if(reloj <= horaCierre){
                         clientes.push(cliente);
                         clientes.sort((a,b)=>a.numero - b.numero);
@@ -136,7 +143,8 @@ export const generarDatos = (datosForm)=>{
                 for(let index = filas.length - 1; index >= 0; index--){
                     if(filas[index].relojAMostrar <= reloj){
                         if (filas[index]?.control?.nombre !== "Apertura") {
-                        if (filas[index]?.control?.nombre === "LlegadaCliente") {
+                            if (filas[index]?.control?.nombre === "LlegadaCliente") {
+                            darBebida(reloj,clientes, esperas,recaudacion);
                             const colaAprendiz = aprendiz.cola.length == 0 ? [] : aprendiz.cola.map(cliente => ({ ...cliente }));
                             const colaVeteranoA = veteranoA.cola.length == 0 ? [] : veteranoA.cola.map(cliente => ({ ...cliente }));
                             const colaVeteranoB = veteranoB.cola.length == 0 ? [] : veteranoB.cola.map(cliente => ({ ...cliente }));
@@ -149,13 +157,20 @@ export const generarDatos = (datosForm)=>{
                             filas[index].veteranoA.cola = colaVeteranoA;
                             filas[index].veteranoB = veteranoBActual;
                             filas[index].veteranoB.cola = colaVeteranoB;
+                            const clientesActual2 = clientes.map(cliente => ({ ...cliente }));
+                            filas[index].clientes = clientesActual2;
+                            const esperaActual = {...esperas};
+                            const recaudacionActual = {...recaudacion};
+                            filas[index].recaudacion = recaudacionActual;
+                            filas[index].esperas = esperaActual;
                         }
-                        const recaudacionActual = {...recaudacion};
-                        const esperaActual = {...esperas};
-                        filas[index].recaudacion = recaudacionActual;
-                        filas[index].esperas = esperaActual;
                         if (filas[index].control.nombre !== "Apertura" && filas[index].control.nombre !== "LlegadaCliente") {
-                            filas[index].clientes = clientesActualesFin;
+                            const clientesConBebida = darBebida(filas[index].relojAMostrar,clientesActualesFin, esperas, recaudacionActual1);
+                            const recaudacionActual = recaudacionActual1
+                            const esperaActual = {...esperas};
+                            filas[index].recaudacion = recaudacionActual;
+                            filas[index].esperas = esperaActual;
+                            filas[index].clientes = clientesConBebida;
                             filas[index].veteranoA= veteranoAActual;
                             filas[index].aprendiz = aprendizActual;
                             filas[index].veteranoB = veteranoBActual;

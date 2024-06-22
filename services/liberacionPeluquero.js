@@ -43,8 +43,8 @@ export const liberacionPeluquero = (reloj,aprendiz,veteranoA,veteranoB,filas,cli
                     }
                 }   
                 finAtencion(fila.control.finAtencion, eventos, {peluquero: "Veterano A"}, datosForm, dia);
-                fila.finAtencionPeluquero = eventos[eventos.length-1];
-                fila.finAtencionPeluquero = veteranoA.cola[0].finAtencion;
+                fila.finAtencionPeluquero = {nombre:eventos[eventos.length-1]?.evento.constructor.name,demora:eventos[eventos.length-1]?.evento.demora,finAtencion:eventos[eventos.length-1]?.evento.finAtencion,random:eventos[eventos.length-1]?.evento.random};
+                //fila.finAtencionPeluquero = veteranoA.cola[0].finAtencion;
                 veteranoA.cola[0].estado = "SA";
                 veteranoA.cola.splice(0, 1);
             }
@@ -67,7 +67,7 @@ export const liberacionPeluquero = (reloj,aprendiz,veteranoA,veteranoB,filas,cli
                     }
                 }
                 finAtencion(fila.control.finAtencion,eventos,{peluquero: "Veterano B"},datosForm,dia);
-                fila.finAtencionPeluquero = eventos[eventos.length-1];
+                fila.finAtencionPeluquero = {nombre:eventos[eventos.length-1]?.evento.constructor.name,demora:eventos[eventos.length-1]?.evento.demora,finAtencion:eventos[eventos.length-1]?.evento.finAtencion,random:eventos[eventos.length-1]?.evento.random};
                 veteranoB.cola[0].estado = "SA";
                 veteranoB.cola.splice(0, 1);
             }
