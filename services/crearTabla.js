@@ -38,6 +38,9 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         if (fila?.finAtencionPeluquero?.nombre === "FinAtencionVeteranoB") {
             finVeteranoB = fila.finAtencionPeluquero?.finAtencion
         }
+        if (llegada >= 480) {
+            llegada = "";
+        }
         row.insertCell().textContent = fila.numero;
         row.cells[0].classList.add('sticky-col');
         row.insertCell().textContent = fila.control.nombre;
