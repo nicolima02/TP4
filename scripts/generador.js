@@ -38,6 +38,7 @@ export const generarDatos = (datosForm)=>{
             if (reloj === 0) {
                 peluquero = "";
                 sa = false
+                esperas.esperaSimultaneas = 0;
                 aprendiz.estado = "L"
                 aprendiz.cola = [] 
                 veteranoA.estado = "L"
