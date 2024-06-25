@@ -57,7 +57,7 @@ export const generarDatos = (datosForm)=>{
             }
             //reloj = eventos[0]?.evento.llegada
             
-            if (reloj >= horaCierre && clientes.length === 0){ //mejorar para que no termine en un dia, agregar un if que controle si dia > datosForm.dia
+            if (reloj >= horaCierre && filas.length === 0){ //mejorar para que no termine en un dia, agregar un if que controle si dia > datosForm.dia
                 recaudacion.gananciasDiarias = 0;
                 dia++;
                 reloj = 0;
@@ -76,7 +76,15 @@ export const generarDatos = (datosForm)=>{
                     evento1 = eventos[0];
                 }else{
                     evento1 = null
-                    reloj = eventos[0]?.evento.llegada >= horaCierre ? filas[0]?.relojAMostrar : eventos[0]?.evento.llegada;
+                    if ( eventos[0]?.evento.llegada >= horaCierre) {
+                        if (filas[0]?.relojAMostrar) {
+                            reloj = filas[0]?.relojAMostrar
+                        }else{
+                            reloj = eventos[0]?.evento.llegada
+                        }
+                    }else{
+                        reloj = eventos[0]?.evento.llegada;
+                    }
                 }
                 console.log(reloj);
                 if (reloj === undefined) {
