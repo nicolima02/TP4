@@ -6,6 +6,7 @@ export const  crearTabla = (filasAMostrar,datosForm,numeroCliente) =>{
     let finVeteranoA  = ""
     let finVeteranoB = ""
     let llegada = ""
+    filasAMostrar[filasAMostrar.length-1].esperaSimultaneas = 0;
     filasAMostrar.forEach(fila => {
         if (fila.finAtencionPeluquero?.nombre == "FinAtencionAprendiz") {
             fila.finAtencionAprendiz = {random:fila.finAtencionPeluquero.random, demora:fila.finAtencionPeluquero.demora, finAtencion:fila.finAtencionPeluquero.finAtencion};
