@@ -1,4 +1,4 @@
-export const  crearTabla = (filasAMostrar,datosForm) =>{
+export const  crearTabla = (filasAMostrar,datosForm,numeroCliente) =>{
     console.log(filasAMostrar);
     let tablaFilas = document.querySelector('.tbody');
     let cont = 0;
@@ -95,7 +95,7 @@ export const  crearTabla = (filasAMostrar,datosForm) =>{
         // })
         //Agregar una columna para cada cliente
         let arrAux = [];
-        for(let i = 0; i< filasAMostrar[filasAMostrar.length-2].clientes[0].numero;i++){
+        for(let i = 0; i< numeroCliente;i++){
             arrAux.push({numero:i+1,estado:null,peluquero:'',momentoRefresco:'',refresco:null});
         }
         for (let i = 0; i < arrAux.length; i++) {

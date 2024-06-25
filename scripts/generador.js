@@ -86,7 +86,6 @@ export const generarDatos = (datosForm)=>{
                         reloj = eventos[0]?.evento.llegada;
                     }
                 }
-                console.log(reloj);
                 if (reloj === undefined) {
                     break
                 }
@@ -100,8 +99,10 @@ export const generarDatos = (datosForm)=>{
                         {clientesAtendidos:veteranoB.clientesAtendidos,estado:veteranoB.estado}, {gananciasDiarias:recaudacion.gananciasDiarias, gastosDiarios:recaudacion.gastosDiarios,gananciasNetas:recaudacion.gananciasNetas},
                         "",clientes, dia);       
                         clientes.sort((a,b)=>a.numero - b.numero);
-                        //const numeroCliente = getNumeroCliente(clientes);              
-                        numeroCliente++;
+                        //const numeroCliente = getNumeroCliente(clientes);  
+                        if (reloj <= horaCierre) {
+                            numeroCliente++;
+                        }            
                         cliente = new Cliente(numeroCliente, "EE", null, parseFloat(reloj+30), false);           
                     }
                     liberacionPeluquero(reloj,aprendiz,veteranoA,veteranoB,filas,clientes,eventos,dia,datosForm,recaudacion);
@@ -216,8 +217,8 @@ export const generarDatos = (datosForm)=>{
                 fila.numero = index + 1;
             });
         };
-        generarTabla(filasAgregadas,esperas.maxEsperaSimultanea);
-        crearTabla(filasAgregadas,datosForm);
+        generarTabla(filasAgregadas,numeroCliente);
+        crearTabla(filasAgregadas,datosForm,numeroCliente);
         
     }
 };

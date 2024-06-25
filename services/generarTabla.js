@@ -1,5 +1,5 @@
 
-export const generarTabla = (filas, maxEsperaSimultanea) => {
+export const generarTabla = (filas, numeroCliente) => {
     const table = document.createElement('table');
     table.classList.add('table-data');
     const tableContainer = document.getElementById('table-container');
@@ -60,7 +60,7 @@ export const generarTabla = (filas, maxEsperaSimultanea) => {
     //     fila1.appendChild(crearEncabezado(`Cliente ${i}`, 4));
     //     fila2.appendChild(crearSubEncabezado(['Estado', 'Peluquero', 'Momento de Refresco', 'Refresco']));
     // }
-    for (let i = 1; i <= filas[filas.length-2].clientes[0].numero; i++) {
+    for (let i = 1; i <= numeroCliente; i++) {
         fila1.appendChild(crearEncabezado(`Cliente ${i}`, 4));
         fila2.appendChild(crearSubEncabezado(['Estado', 'Peluquero', 'Momento de Refresco', 'Refresco']));
     }
